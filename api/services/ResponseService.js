@@ -1,5 +1,5 @@
 module.exports = {
-    json: function (status, res, message, data, meta) {
+    json: function (status, res, message, data) {
         var response = {
             response: {
                 message: message
@@ -8,10 +8,8 @@ module.exports = {
         if (typeof data !== 'undefined') {
             response.response.data = data;
         }
-        if (typeof meta !== 'undefined') {
-            response.response.meta = meta;
-        }
+       
         return res.status(status).json(response);
     }
     
-};
+};  
