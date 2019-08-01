@@ -12,7 +12,6 @@ module.exports = {
   },
   create: function(req,res){
     dataReq=req.allParams()
-    console.log(dataReq)
     User.create({
       id:uuid(),
       fullName: req.param('fullName'),

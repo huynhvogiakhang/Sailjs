@@ -1,6 +1,8 @@
+
 module.exports = {
 
     login: function (req, res) {
+      console.log(req.allParams())
       var fullName = req.param('fullName');
       var password = req.param('password');
   
@@ -10,8 +12,11 @@ module.exports = {
         if (!user) {
           return invalidEmailOrPassword(res);
         }
+      
         signInUser(req, res, password, user)
+        
       }).catch(function (err) {
+        console.log(err)
         return invalidEmailOrPassword(res);
       })
     }
@@ -25,11 +30,36 @@ module.exports = {
         if (!valid) {
           return this.invalidEmailOrPassword();
         } else {
-          var responseData = {
-            user: user,
-            token: generateToken(user.id)
+          expire= 60*60*24
+          
+          
+          var gToken=generateToken(user.id)
+          
+          redis.set('User:'+user.id,gToken,'EX',expire)
+          now= new Date()
+          now.setDate(now.getDate()+3)
+          Token.create({
+            id: gToken,
+            ExpiredDate: now
+          }).then(Token => {
+            
+            
+            var responseData = {
+              user: user,
+              token: gToken
+            }
+            return ResponseService.json(200, res, "Successfully signed in", responseData)
+          }).catch(error => {
+            
+            
+            if (error.invalidAttributes){
+            
+              return ResponseService.json(400, res, "Token could not import", error.Errors)
+            }
           }
-          return ResponseService.json(200, res, "Successfully signed in", responseData)
+        )
+        
+          
         }
       }
     ).catch(function (err) {
