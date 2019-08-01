@@ -43,7 +43,12 @@ module.exports = {
     })
     .catch(err => res.serverError(err));
   },
+  // todo: (req, res) => {
+  //   jwtService.todo(params, (err, result) => {
+  //     if err return res.id
 
+  //   })
+  // }
    update: function(req,res){
     
     let attributes = {}

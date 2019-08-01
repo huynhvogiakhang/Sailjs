@@ -9,5 +9,16 @@ module.exports = {
 
   verify: function (token, callback) { 
     return jwt.verify(token, jwtSecret, callback);
-  }
+  },
+
+  // todo: (params, done) => {
+  //   async.waterfall([
+  //     (cb) => {
+  //       if checknotequal 
+  //         return done 
+  //       return cb() 
+  //     }
+  //   ],
+  //     done)
+  // }
 }

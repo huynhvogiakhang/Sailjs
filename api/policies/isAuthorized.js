@@ -6,38 +6,59 @@ module.exports = function (req, res, next) {
     } else {
       return ResponseService.json(401, res, "No authorization header was found");
     }
-  
+  //  function resolve(cb){
+  //   // do some thing
+  //   if err
+  //     return res.badR
+  //   if done 
+  //     return cb()
+    
+  //     fdsfdsfsfds
+
+  //     fdsfdsfsfds
+  //  }
+  //  async.waterfall([
+  //    checkauthen
+  //    activetoken
+
+  //  ], (err, result) => {
+  //    if err res.badRe
+  //    res.ok
+  //  })
     JwtService.verify(token, function(err, decoded){
       console.log("err " ,err)
       if (err) return ResponseService.json(401, res, "Invalid Token!");
       req.token = token;
       expire= 60*60*24
-      redis.get('User:'+decoded.id, function(err,result){
-        if (err){
-          console.log('loi: ',err)
-        }
-        else {
-          console.log(decoded.id)
-          console.log('result:',result)
-          redis.set('Userupdate:'+decoded.id,result,'EX',expire)
-        }
-      })
-      User.findOne({id: decoded.id}).then(function(user){
-        req.current_user = user;
-        next();
-      })
-      var a= new Date()
       
-      // Token.findOne({id: token}).then(function(token){
-      //    a=token.ExpiredDate;
+      // User.findOne({id: decoded.id}).then(function(user){
+      //   req.current_user = user;
+      //   next();
       // })
-      a.setDate(a.getDate()+3) 
-      
-      Token.update({id: token}).set({
-        ExpiredDate: a
-      }).then (result => {
-      })
-      .catch(err => res.serverError(err));
+      var a= new Date()
+      var b=0
+      Token.findOne({id: token}).then(function(token){
+         a=token.ExpiredDate
+         b= token.Status
+         if (b==0) {
+           return ResponseService.json(401, res, "Token expired!");
+           
+         }
+         a.setDate(a.getDate()+3) 
+         return Token.update({id: token.id}).set({
+            ExpiredDate: a
+          })
+        }).then (function(){
+           if (b==1)
+           {
+              redis.set('User:'+decoded.id,token,'EX',expire)
+           }
+           next();
+      }).catch(err => res.serverError(err));
+    
+      // }).then (result => {
+      // })
+      // .catch(err => res.serverError(err));
       
     });
   

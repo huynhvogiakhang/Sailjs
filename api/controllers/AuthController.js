@@ -1,8 +1,8 @@
-
+var uuid = require('uuid/v4');  
 module.exports = {
 
     login: function (req, res) {
-      console.log(req.allParams())
+      var platform = req.param('platform');
       var fullName = req.param('fullName');
       var password = req.param('password');
   
@@ -13,18 +13,39 @@ module.exports = {
           return invalidEmailOrPassword(res);
         }
       
-        signInUser(req, res, password, user)
+        signInUser(req, res, password, user, platform)
         
       }).catch(function (err) {
-        console.log(err)
+        console.log('err login: ',err)
         return invalidEmailOrPassword(res);
       })
-    }
+    },
+    logout: function (req, res, err, user) {
+      let attributes = {}
+      JwtService.verify(token, function(err, decoded){
+        if (err) return ResponseService.json(401, res, "Invalid Token!");
+        if (req.param('platform')){
+            attributes.status = "Expired"
+          }
+          
+          Platform.update({
+            id : decoded.id,
+            platform: req.param('platform')
+          },attributes
+          )
+          .then (users => {
+            res.ok('Log out successfully');
+          })
+          .catch(err => res.serverError(err));
+      })
+          
+      }
+  
   
   };
   
   
-  function signInUser(req, res, password, user) {
+  function signInUser(req, res, password, user, platform) {
     User.comparePassword(password, user).then(
       function (valid) {
         if (!valid) {
@@ -40,14 +61,24 @@ module.exports = {
           now.setDate(now.getDate()+3)
           Token.create({
             id: gToken,
-            ExpiredDate: now
+            ExpiredDate: now,
+            Status: 1
           }).then(Token => {
-            
+            now1= new Date()
             
             var responseData = {
               user: user,
-              token: gToken
+              token: gToken,
+              platform: platform,
+              Date: now1
             }
+            Platform.create({
+              platformId: uuid(),
+              id: user.id,
+              platform : responseData.platform,
+              date: responseData.Date,
+              status: "Active"
+            }).then(user => {})
             return ResponseService.json(200, res, "Successfully signed in", responseData)
           }).catch(error => {
             
@@ -63,7 +94,7 @@ module.exports = {
         }
       }
     ).catch(function (err) {
-      console.log(err)
+      console.log('err: ',err)
       return ResponseService.json(403, res, "Forbidden")
     })
   };

@@ -23,7 +23,8 @@ module.exports.routes = {
   'POST /create': 'UserController.create',
   'get /api/protected/random-quote': 'QuoteController.getProtectedQuote',
   'post /login': 'AuthController.login',
-  'DELETE /user/:id' :  'UserController.delete'
+  'DELETE /user/:id' :  'UserController.delete',
+  'POST /logout': 'AuthController.logout'
 
   /***************************************************************************
   *                                                                          *
