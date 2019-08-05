@@ -52,11 +52,8 @@ module.exports = {
           return this.invalidEmailOrPassword();
         } else {
           expire= 60*60*24
-          
-          
           var gToken=generateToken(user.id)
-          
-          redis.set('User:'+user.id,gToken,'EX',expire)
+          CacheService.importData(user.id,gToken,expire)
           now= new Date()
           now.setDate(now.getDate()+3)
           Token.create({

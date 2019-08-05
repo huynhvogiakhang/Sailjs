@@ -1,3 +1,4 @@
+require('../services/CacheService')
 module.exports = function (req, res, next) {
     let token;
     if(req.headers.authorization){
@@ -51,7 +52,7 @@ module.exports = function (req, res, next) {
         }).then (function(){
            if (b==1)
            {
-              redis.set('User:'+decoded.id,token,'EX',expire)
+              CacheService.importData(decoded.id,token,expire)
            }
            next();
       }).catch(err => res.serverError(err));
