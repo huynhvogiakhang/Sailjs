@@ -38,6 +38,8 @@ module.exports = function (req, res, next) {
       // })
       var a= new Date()
       var b=0
+      
+      
       Token.findOne({id: token}).then(function(token){
          a=token.ExpiredDate
          b= token.Status
@@ -50,6 +52,7 @@ module.exports = function (req, res, next) {
             ExpiredDate: a
           })
         }).then (function(){
+          
            if (b==1)
            {
               CacheService.importData(decoded.id,token,expire)
