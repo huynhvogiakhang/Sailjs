@@ -1,7 +1,8 @@
-var uuid = require('uuid/v4');  
+console.log(sails.config.API_KEY)
 module.exports = {
  
   get: function(req, res) {
+    
     User.find().exec(function(err, users) {
       if (err) {
         return res.json(err);
@@ -12,6 +13,7 @@ module.exports = {
   },
   create: function(req,res){
     dataReq=req.allParams()
+  
     User.create({
       id:uuid(),
       fullName: req.param('fullName'),
@@ -73,4 +75,5 @@ module.exports = {
     })
     .catch(err => res.serverError(err));
   }
+    
 };

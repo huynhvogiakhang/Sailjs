@@ -1,0 +1,14 @@
+    
+{
+    "Welcome": "Xin Chào",
+	"A brand new app.": "Chim Chích Chòe",
+	"Hello %s, how are you today?": "Con Bướm Xinh",
+	"LoginSuccess": "Đăng Nhập Thành Công",
+	"InvalidPass": "Sai Email Hoặc Mật Khẩu",
+	"EmailPassRequired": "Cần Nhập Email và Password",
+	"CreateUserSuccess": "Tạo Người Dùng Mới Thành Công",
+	"LogOutSuccess": "Đăng Xuất Thành Công",
+	"InvalidToken": "Token Không Hợp Lệ",
+	"NoReqApikey": "Không có Apikey"
+	
+}

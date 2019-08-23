@@ -3,7 +3,9 @@ module.exports = {
         var response = {
             response: {
                 message: message
+
             }
+            
         };
         if (typeof data !== 'undefined') {
             response.response.data = data;

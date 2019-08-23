@@ -1,4 +1,15 @@
 {
-  "Welcome": "Welcome",
-  "A brand new app.": "A brand new app."
+	"Welcome": "Welcome",
+	"A brand new app.": "A brand new app.",
+	"LoginSuccess": "Successfully signed in",
+	"InvalidPass": "Invalid Email Or Password",
+	"EmailPassRequired": "Email and password required",
+	"CreateUserSuccess": "User created successfullyyyy",
+	"LogOutSuccess": "Log Out Successfull",
+	"InvalidToken": "Invalid Token",
+	"ReqApikey": "Apikey required",
+	"getvnpaysucces": "getvnpaysucces",
+	"getmomo": "getmomo",
+	"getvnPay": "getvnPay",
+	"getAsiaPay": "getAsiaPay"
 }

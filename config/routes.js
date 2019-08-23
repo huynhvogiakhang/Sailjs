@@ -19,12 +19,16 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
-  'GET  /user': 'UserController.get',
+  'GET  /get ': 'UserController.get',
   'POST /create': 'UserController.create',
   'get /api/protected/random-quote': 'QuoteController.getProtectedQuote',
   'post /login': 'AuthController.login',
   'DELETE /user/:id' :  'UserController.delete',
-  'POST /logout': 'AuthController.logout'
+  'POST /logout': 'AuthController.logout',
+  'get /sequelize': 'AuthController.sequelize',
+  'get /momo': 'MomoController.getMomo',
+  'get /asiapay': 'MomoController.getAsiapay',
+  'get /vnpay': 'MomoController.getVnpay',
 
   /***************************************************************************
   *                                                                          *

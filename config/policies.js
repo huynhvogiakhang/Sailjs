@@ -11,20 +11,22 @@
 module.exports.policies = {
   '*': ['isAuthorized'],
   
+  'MomoController':{
+      'getMomo':true,
+      'getAsiapay':true,
+      'getVnpay':true,
+  },
   'UserController': {
-    'create': true
+    'create': true,
+    'forgot':['setLanguage'],
+
   },
 
   'AuthController': {
-    '*': true
+    'login': 'setLanguage',
+    'sequelize' : true
+  },
+  'LogOutController':{
+    'logout':['setLanguage', 'isAuthorized']
   }
-  /***************************************************************************
-  *                                                                          *
-  * Default policy for all controllers and actions, unless overridden.       *
-  * (`true` allows public access)                                            *
-  *                                                                          *
-  ***************************************************************************/
-
-  // '*': true,
-
 };

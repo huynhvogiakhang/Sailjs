@@ -25,7 +25,10 @@ module.exports = {
     }
   },
 
- 
+  toJSON: function(){
+    var obj = this.toObject()
+    delete obj.password
+  },
     
   beforeCreate: function(values, cb){
     bcrypt.hash(values.password, 10, function (err, hash) {

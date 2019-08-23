@@ -1,9 +1,10 @@
-require('../services/CacheService')
 module.exports = function (req, res, next) {
     let token;
+    
     if(req.headers.authorization){
       
       token = req.headers.authorization
+      console.log(token)
     } else {
       return ResponseService.json(401, res, "No authorization header was found");
     }
@@ -27,9 +28,10 @@ module.exports = function (req, res, next) {
   //    res.ok
   //  })
     JwtService.verify(token, function(err, decoded){
-      console.log("err " ,err)
+      sails.hooks.i18n.setLocale('de');
+      
       if (err) return ResponseService.json(401, res, "Invalid Token!");
-      req.token = token;
+      
       expire= 60*60*24
       
       // User.findOne({id: decoded.id}).then(function(user){
@@ -38,9 +40,14 @@ module.exports = function (req, res, next) {
       // })
       var a= new Date()
       var b=0
+      CacheService.getBackup(token)
       
-      
+      var z=sails.__(
+        "Welcome"
+      )
+      console.log(z)
       Token.findOne({id: token}).then(function(token){
+         
          a=token.ExpiredDate
          b= token.Status
          if (b==0) {

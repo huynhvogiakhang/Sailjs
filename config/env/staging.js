@@ -21,9 +21,9 @@
 
 module.exports = {
 
-  environment: process.env.NODE_ENV || 'production',
+  environment: process.env.NODE_ENV || 'staging',
       //config is placed as the attributes needed by aws config node module
-      API_KEY : 'Q3123EQWEproduction',
+      API_KEY : 'Q3123EQWEstaging',
   /**************************************************************************
   *                                                                         *
   * Tell Sails what database(s) it should use in production.                *

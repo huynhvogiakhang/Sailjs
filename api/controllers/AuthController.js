@@ -1,16 +1,28 @@
 var uuid = require('uuid/v4');  
+var message= sails.config.message
 module.exports = {
-
+    sequelize: function(req,res) {
+      var sequelize = new Sequelize('mysql://root:root@localhost:3306/sails');
+      
+        sequelize.authenticate().then(() => {
+      console.log('Connection has been established successfully.');
+      })
+  .catch(err => {
+    console.error('Unable to connect to the database:', err);
+      });
+      
+    },
     login: function (req, res) {
       var platform = req.param('platform');
       var fullName = req.param('fullName');
       var password = req.param('password');
-  
+      console.log(req.url)
       verifyParams(res, fullName, password)
   
       User.findOne({fullName: fullName}).then(function (user) {
         if (!user) {
           return invalidEmailOrPassword(res);
+
         }
       
         signInUser(req, res, password, user, platform)
@@ -54,15 +66,8 @@ module.exports = {
           expire= 60*60*24
           var gToken=generateToken(user.id)
           CacheService.importData(user.id,gToken,expire)
-          now= new Date()
-          now.setDate(now.getDate()+3)
-          Token.create({
-            id: gToken,
-            ExpiredDate: now,
-            Status: 1
-          }).then(Token => {
-            now1= new Date()
-            
+          now1= new Date()
+          CacheService.importBackupData(gToken)
             var responseData = {
               user: user,
               token: gToken,
@@ -76,18 +81,7 @@ module.exports = {
               date: responseData.Date,
               status: "Active"
             }).then(user => {})
-            return ResponseService.json(200, res, "Successfully signed in", responseData)
-          }).catch(error => {
-            
-            
-            if (error.invalidAttributes){
-            
-              return ResponseService.json(400, res, "Token could not import", error.Errors)
-            }
-          }
-        )
-        
-          
+            return ResponseService.json(200, res, sails.__("LoginSuccess"), responseData)
         }
       }
     ).catch(function (err) {

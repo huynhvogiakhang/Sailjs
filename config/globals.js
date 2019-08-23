@@ -8,7 +8,8 @@
  * For more information on any of these options, check out:
  * https://sailsjs.com/config/globals
  */
-
+uuid= require('uuid/v4');  
+Sequelize = require('sequelize');    
 module.exports.globals = {
 
   /****************************************************************************
@@ -17,9 +18,11 @@ module.exports.globals = {
   * (`_`), making  it accessible throughout your app.                         *
   *                                                                           *
   ****************************************************************************/
-
+  
   _: require('@sailshq/lodash'),
-
+ uuid:true,
+ Sequelize: true,
+ message:true,
   /****************************************************************************
   *                                                                           *
   * This app was generated without a dependency on the "async" NPM package.   *
@@ -37,7 +40,7 @@ module.exports.globals = {
   * (See the link at the top of this file for more information.)              *
   *                                                                           *
   ****************************************************************************/
-
+  services: true,
   models: true,
 
   /****************************************************************************
