@@ -12,7 +12,7 @@
     "cross-env": "^5.2.0",
     "grunt": "1.0.4",
     "ioredis": "^4.11.2",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "mysql2": "^1.6.5",
     "sails": "^1.2.3",
     "sails-hook-grunt": "^4.0.0",
